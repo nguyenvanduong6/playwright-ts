@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test-dev": "ENV=dev npx playwright test",
+    "test-run": "ENV=example npx playwright test",
+    "test-head": "ENV=example npx playwright test --headed",
+
+    "report": "npx playwright show-report",
+
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write ."
   },

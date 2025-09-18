@@ -1,19 +1,61 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, BrowserContext, Page } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-  console.log(process.env.S3_BUCKET);
+// test('Verify login successfully', async ({ page }) => {
+//   await page.goto('/login');
+//   await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').click();
+//   await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').fill('vduomg@gmail.com');
+//   await page.getByRole('textbox', { name: 'Password' }).click();
+//   await page.getByRole('textbox', { name: 'Password' }).fill('abcd1234');
+//   await page.getByRole('button', { name: 'Login' }).click();
+//   await expect(page.getByText('Logged in as Finn')).toBeVisible();
+// });
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+test.describe.serial('Verify login successfully', () => {
+  let context: BrowserContext;
+  let page: Page;
+
+  test.beforeAll(async ({ browser }) => {
+    context = await browser.newContext();
+    page = await context.newPage();
+  });
+
+  test('Given user open login screen', async () => {
+    await page.goto('/login');
+    await expect(page.getByRole('heading', { name: 'Login to your account' })).toBeVisible();
+  });
+
+  test('When user perform login steps', async () => {
+    await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').click();
+    await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').fill('vduomg@gmail.com');
+    await page.getByRole('textbox', { name: 'Password' }).click();
+    await page.getByRole('textbox', { name: 'Password' }).fill('abcd1234');
+    await page.getByRole('button', { name: 'Login' }).click();
+  });
+
+  test('Then user login successfully', async () => {
+    await expect(page.getByText('Logged in as Finn')).toBeVisible();
+  });
+
+  test.afterAll(async () => {
+    await context.close();
+  });
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('Verify login successfully', async ({ page }) => {
+  await test.step('Given user open login screen', async () => {
+    await page.goto('/login');
+    await expect(page.getByRole('heading', { name: 'Login to your account' })).toBeVisible();
+  });
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  await test.step('When user perform login steps', async () => {
+    await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').click();
+    await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').fill('vduomg@gmail.com');
+    await page.getByRole('textbox', { name: 'Password' }).click();
+    await page.getByRole('textbox', { name: 'Password' }).fill('abcd1234');
+    await page.getByRole('button', { name: 'Login' }).click();
+  });
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  await test.step('Then user login successfully', async () => {
+    await expect(page.getByText('Logged in as Finn')).toBeVisible();
+  });
 });
