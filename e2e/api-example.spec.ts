@@ -8,18 +8,20 @@ interface Product {
   category: object;
 }
 
-function isValidProduct(obj: any): obj is Product {
+function isValidProduct(obj: unknown): obj is Product {
+  if (typeof obj !== 'object' || obj === null) return false;
+  const o = obj as Record<string, unknown>;
+
   return (
-    obj &&
-    typeof obj.id === 'number' &&
-    typeof obj.name === 'string' &&
-    typeof obj.price === 'string' &&
-    typeof obj.brand === 'string' &&
-    typeof obj.category === 'object'
+    typeof o.id === 'number' &&
+    typeof o.name === 'string' &&
+    typeof o.price === 'string' &&
+    typeof o.brand === 'string' &&
+    typeof o.category === 'object'
   );
 }
 
-function validProductListResponse(response: any): string[] {
+function validProductListResponse(response: unknown): string[] {
   const errors: string[] = [];
 
   if (!Array.isArray(response)) {
