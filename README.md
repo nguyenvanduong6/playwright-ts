@@ -1,28 +1,20 @@
-Inside that directory, you can run several commands:
+**Commands:**
 
-npx playwright test
-Runs the end-to-end tests.
+    npm run test-run
+Runs the end-to-end tests with example env.
 
-npx playwright test --ui
-Starts the interactive UI mode.
+    npm run test-head
+See the browser UI during test execution.
 
-npx playwright test --project=chromium
-Runs the tests only on Desktop Chrome.
+    npm run report
+Open last HTML report
 
-npx playwright test example
-Runs the tests in a specific file.
+    npm run lint
+Check eslint for .ts,.tsx files
 
-npx playwright test --debug
-Runs the tests in debug mode.
+    npm run format
+Rewrite the format of files with prettier
 
-npx playwright codegen
-Auto generate tests with Codegen.
+**Features:**
 
-We suggest that you begin by typing:
-
-    npx playwright test
-
-And check out the following files:
-- ./e2e/example.spec.ts - Example end-to-end test
-- ./tests-examples/demo-todo-app.spec.ts - Demo Todo App end-to-end tests
-- ./playwright.config.ts - Playwright Test configuratio
+Use as a boilerplate
